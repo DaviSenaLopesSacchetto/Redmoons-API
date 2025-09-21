@@ -19,7 +19,12 @@ def clean_data(df):
 
 def encode_labels(df):
     """Transforma a coluna koi_disposition em label binário (1 = CONFIRMED, 0 = outro)."""
-    df["label"] = df["koi_disposition"].apply(lambda x: 1 if x == "CONFIRMED" else 0)
+    mapping = {
+    "CONFIRMED": 0,
+    "CANDIDATE": 1,
+    "FALSE POSITIVE": 2
+    }
+    df["label"] = df["koi_disposition"].map(mapping)
     X = df[["koi_prad", "koi_period", "koi_steff", "koi_srad"]]
     y = df["label"]
     return X, y
