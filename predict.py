@@ -4,6 +4,7 @@ from fastapi import FastAPI, Body
 from sklearn.linear_model import SGDClassifier
 from sklearn.preprocessing import StandardScaler
 import os
+from fastapi.middleware.cors import CORSMiddleware
 
 # Caminho do modelo
 MODEL_PATH = "models/sgd_model.pkl"
@@ -14,6 +15,14 @@ label_map_str2num = {v:k for k,v in label_map_num2str.items()}
 
 # Inicializa o app
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permite todas as origens
+    allow_credentials=True,
+    allow_methods=["*"],  # Permite todos os métodos HTTP
+    allow_headers=["*"],  # Permite todos os cabeçalhos
+)
 
 # Carrega ou cria modelo
 if os.path.exists(MODEL_PATH):
