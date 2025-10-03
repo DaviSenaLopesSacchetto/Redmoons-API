@@ -66,7 +66,7 @@ def feedback(
     real_label: str = Body(...)
 ):
     X_new = np.array([[koi_prad, koi_period, koi_steff, koi_srad]])
-    X_new_scaled = scaler.fit_transform(X_new)  # ideal: usar scaler treinado com dados reais
+    X_new_scaled = scaler.transform(X_new)  # ideal: usar scaler treinado com dados reais
     y_new = np.array([label_map_str2num[real_label.upper()]])
 
     # Treinamento incremental
