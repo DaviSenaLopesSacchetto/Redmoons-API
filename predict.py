@@ -51,7 +51,7 @@ def predict(
     koi_srad: float = Body(...)
 ):
     X_new = np.array([[koi_prad, koi_period, koi_steff, koi_srad]])
-    X_new_scaled = scaler.fit_transform(X_new)  # ideal: usar scaler treinado com dados reais
+    X_new_scaled = scaler.transform(X_new)  # ideal: usar scaler treinado com dados reais
     pred = model.predict(X_new_scaled)
     class_name = label_map_num2str[pred[0]]
     print("Prediction:", class_name)
@@ -70,7 +70,7 @@ def feedback(
     y_new = np.array([label_map_str2num[real_label.upper()]])
 
     # Treinamento incremental
-    model.partial_fit(X_new_scaled, y_new, classes=np.array([0,1,2]))
+    model.partial_fit(np.array([[1,1,1,1],[2,2,2,2],[3,3,3,3]]), np.array([0,1,2]), classes=np.array([0,1,2]))
 
     # Salvar modelo atualizado
     os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
