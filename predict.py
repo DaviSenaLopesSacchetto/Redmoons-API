@@ -38,13 +38,22 @@ def home():
     return {"msg": "API de Exoplanetas pronta 🚀"}
 
 # Endpoint de predição
+# Endpoint de predição
 @app.post("/predict")
 def predict(
     koi_prad: float = Body(...),
     koi_period: float = Body(...),
     koi_steff: float = Body(...),
-    koi_srad: float = Body(...)
+    koi_srad: float = Body(...),
+    host_name: str = Body(None)  # Novo parâmetro opcional
 ):
+    # FILTRO: Planetas do Sistema Solar
+    if host_name is not None and host_name.lower() in ["sol", "sun"]:
+        return {
+            "prediction": None,
+            "message": "Objeto pertence ao Sistema Solar. Não é considerado exoplaneta."
+        }
+
     # Monta array de features
     X_new = np.array([[koi_prad, koi_period, koi_steff, koi_srad]])
 
@@ -56,6 +65,7 @@ def predict(
     class_name = label_map_num2str[pred[0]]
 
     return {"prediction": class_name}
+
 
 # Endpoint de feedback (treinamento incremental)
 @app.post("/feedback")
