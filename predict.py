@@ -45,7 +45,7 @@ def predict(
     koi_period: float = Body(...),
     koi_steff: float = Body(...),
     koi_srad: float = Body(...),
-    host_name: str = Body(None)  # Novo parâmetro opcional
+    host_name: str = Body(...)  # Novo parâmetro opcional
 ):
     # FILTRO: Planetas do Sistema Solar
     if host_name is not None and host_name.lower() in ["sol", "sun"]:
