@@ -51,7 +51,7 @@ def predict(
     if host_name is not None and host_name.lower() in ["sol", "sun"]:
         return {
             "prediction": None,
-            "message": "This object is from solar system, not a exoplanet"
+            "message": "This object is from solar system, not a exoplanet!"
         }
 
     # Monta array de features
